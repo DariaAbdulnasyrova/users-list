@@ -28,7 +28,7 @@ export default function Modal({
       aria-labelledby="modal-title"
     >
       <div className={styles.content}>
-        <h2 className={styles.title} id="modal-title">
+        <h2 className={styles.title} id="modal-title" data-testid="modal-title">
           {title}
           <button className={styles.close} onClick={onClose} aria-label="Close">
             <CloseIcon />

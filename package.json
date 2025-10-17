@@ -9,12 +9,14 @@
   "scripts": {
     "start": "vite",
     "dev": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "test": "playwright test"
   },
   "prettierConfig": {
     "semi": false
   },
   "devDependencies": {
+    "@playwright/test": "^1.56.1",
     "@types/node": "^20.19.22",
     "@types/react": "^17.0.48",
     "@types/react-dom": "^17.0.17",

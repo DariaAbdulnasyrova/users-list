@@ -32,8 +32,8 @@ export default function Form({ formData, onSubmit, onCancel }: FormProps) {
   return (
     <form className={styles.form} onSubmit={handleFormSubmit}>
       <div className={styles.input}>
-        <label htmlFor="country-input">Country</label>
-        <select id="country-input" {...register("country", ["age"])}>
+        <label htmlFor="country-select">Country</label>
+        <select id="country-select" {...register("country", ["age"])}>
           <option value="">Select country</option>
           {Object.values(Country).map((country) => (
             <option key={country} value={country}>
@@ -79,10 +79,20 @@ export default function Form({ formData, onSubmit, onCancel }: FormProps) {
         </div>
       </div>
       <div className={styles.buttons}>
-        <button className={styles.button} type="button" onClick={onCancel}>
+        <button
+          className={styles.button}
+          type="button"
+          data-testid="cancel-btn"
+          onClick={onCancel}
+        >
           Cancel
         </button>
-        <button className={styles.saveButton} type="submit" disabled={!isValid}>
+        <button
+          className={styles.saveButton}
+          type="submit"
+          data-testid="submit-btn"
+          disabled={!isValid}
+        >
           Save
         </button>
       </div>

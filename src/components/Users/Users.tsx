@@ -71,7 +71,11 @@ export default function Users() {
         <td>{user.lastName}</td>
         <td>{user.age}</td>
         <td>
-          <button className={styles.editButton} onClick={handleEdit(user)}>
+          <button
+            className={styles.editButton}
+            data-testid={`edit-user-btn-${user.id}`}
+            onClick={handleEdit(user)}
+          >
             Edit
           </button>
         </td>
@@ -83,7 +87,11 @@ export default function Users() {
     <div>
       <div className={styles.header}>
         <div>Users</div>
-        <button className={styles.addButton} onClick={handleAdd}>
+        <button
+          className={styles.addButton}
+          data-testid="add-user-btn"
+          onClick={handleAdd}
+        >
           <AddIcon />
           Add user
         </button>
@@ -103,7 +111,7 @@ export default function Users() {
       <Modal
         isOpen={isOpen}
         onClose={handleModalClose}
-        title={user ? "Add User" : "Edit User"}
+        title={user ? "Edit User" : "Add User"}
       >
         <Form
           formData={user}
