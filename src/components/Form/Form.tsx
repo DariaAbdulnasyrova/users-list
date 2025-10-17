@@ -1,7 +1,7 @@
 import React, { FormEvent } from "react";
 import { Country, User, UserFormData } from "@/types/user";
 import { useForm } from "@/hooks/useForm";
-import { validationRules } from "./utils";
+import { validationRules } from "./validation";
 import styles from "./Form.module.css";
 
 type FormProps = {
@@ -18,25 +18,22 @@ export default function Form({ formData, onSubmit, onCancel }: FormProps) {
     country: formData?.country ?? "",
   };
 
-  const { errors, register, handleSubmit, submitted, isValid } =
-    useForm<UserFormData>(initialFormData);
+  const { errors, register, handleSubmit, isValid } = useForm<UserFormData>(
+    initialFormData,
+    validationRules
+  );
 
   const handleFormSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    handleSubmit(validationRules, onSubmit);
+    handleSubmit(onSubmit);
   };
 
   return (
     <form className={styles.form} onSubmit={handleFormSubmit}>
-      <div
-        className={`${styles.input} ${errors.country ? styles.inputError : ""}`}
-      >
+      <div className={styles.input}>
         <label htmlFor="country-input">Country</label>
-        <select
-          id="country-input"
-          {...register("country", validationRules.country)}
-        >
+        <select id="country-input" {...register("country", ["age"])}>
           <option value="">Select country</option>
           {Object.values(Country).map((country) => (
             <option key={country} value={country}>
@@ -44,26 +41,29 @@ export default function Form({ formData, onSubmit, onCancel }: FormProps) {
             </option>
           ))}
         </select>
+        <div
+          className={`${styles.error} ${errors.country ? styles.visible : ""}`}
+        >
+          {errors.country}
+        </div>
       </div>
       <div className={styles.input}>
         <label htmlFor="first-name-input">First name</label>
-        <input
-          id="first-name-input"
-          type="text"
-          required
-          disabled={submitted}
-          {...register("firstName", validationRules.firstName)}
-        />
+        <input id="first-name-input" type="text" {...register("firstName")} />
+        <div
+          className={`${styles.error} ${errors.firstName ? styles.visible : ""}`}
+        >
+          {errors.firstName}
+        </div>
       </div>
       <div className={styles.input}>
         <label htmlFor="last-name-input">Last name</label>
-        <input
-          id="last-name-input"
-          type="text"
-          required
-          disabled={submitted}
-          {...register("lastName", validationRules.lastName)}
-        />
+        <input id="last-name-input" type="text" {...register("lastName")} />
+        <div
+          className={`${styles.error} ${errors.lastName ? styles.visible : ""}`}
+        >
+          {errors.lastName}
+        </div>
       </div>
       <div className={styles.input}>
         <label htmlFor="age-input">Age</label>
@@ -72,26 +72,17 @@ export default function Form({ formData, onSubmit, onCancel }: FormProps) {
           type="number"
           min="0"
           max="100"
-          required
-          disabled={submitted}
-          {...register("age", validationRules.age)}
+          {...register("age")}
         />
-        {errors.age && <p className="error">{errors.age}</p>}
+        <div className={`${styles.error} ${errors.age ? styles.visible : ""}`}>
+          {errors.age}
+        </div>
       </div>
       <div className={styles.buttons}>
-        <button
-          className={styles.button}
-          type="button"
-          disabled={submitted}
-          onClick={onCancel}
-        >
+        <button className={styles.button} type="button" onClick={onCancel}>
           Cancel
         </button>
-        <button
-          className={styles.saveButton}
-          type="submit"
-          disabled={!isValid || submitted}
-        >
+        <button className={styles.saveButton} type="submit" disabled={!isValid}>
           Save
         </button>
       </div>

@@ -10,6 +10,7 @@ export enum Country {
   Canada = "Canada",
   Australia = "Australia",
   Japan = "Japan",
+  Ireland = "Ireland",
 }
 
 export type UserBase = {

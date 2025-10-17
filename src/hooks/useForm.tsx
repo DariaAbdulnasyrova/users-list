@@ -1,76 +1,75 @@
 import { useState } from "react";
 
 type Errors<T> = Partial<Record<keyof T, string>>;
-type ValidationRule = (value: string | number) => string | null;
-type ValidationRules<T> = Partial<Record<keyof T, ValidationRule>>;
+type ValidationRule<T> = (value: string, values: T) => string | null;
+export type ValidationRules<T> = Partial<Record<keyof T, ValidationRule<T>[]>>;
 
-export function useForm<T extends Record<string, string | number>>(
-  formData: T
+export function useForm<T extends Record<string, string>>(
+  initialValues: T,
+  validationRules: ValidationRules<T>
 ) {
-  const [values, setValues] = useState(formData);
+  const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState<Errors<T>>({});
   const [touched, setTouched] = useState<Partial<Record<keyof T, boolean>>>({});
   const [submitted, setSubmitted] = useState<boolean>(false);
 
-  const validate = (rules: ValidationRules<T>) => {
-    const newErrors: Errors<T> = {};
+  const validate = (
+    fields: (keyof T)[] = Object.keys(validationRules),
+    currentValues: T = values
+  ) => {
+    const newErrors: Errors<T> = { ...errors };
 
-    for (const key in rules) {
-      const rule = rules[key];
+    for (const key of fields) {
+      const validators = validationRules[key] || [];
 
-      if (rule) {
-        const error = rule(values[key]);
+      for (const validator of validators) {
+        newErrors[key] = validator(currentValues[key], currentValues);
 
-        if (error) newErrors[key] = error;
+        if (newErrors[key]) {
+          break;
+        }
       }
     }
 
     setErrors(newErrors);
 
-    return Object.keys(newErrors).length === 0;
+    return Object.values(newErrors).every((value) => !value);
   };
 
-  const register = (name: keyof T, rules: ValidationRules<T>[keyof T]) => ({
+  const register = (name: keyof T, dependent: (keyof T)[] = []) => ({
     name,
     value: values[name],
     onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       const { value } = e.target;
 
-      setValues((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
+      setValues((prev) => {
+        const newValues = { ...prev, [name]: value };
+        const fieldsToValidate = [...dependent];
 
-      if (rules && touched[name]) {
-        const error = rules(value);
+        if (touched[name] || submitted) {
+          fieldsToValidate.push(name);
+        }
 
-        setErrors((prev) => ({ ...prev, [name]: error || undefined }));
-      }
+        validate(fieldsToValidate, newValues);
+
+        return newValues;
+      });
     },
     onBlur: () => {
       setTouched((prev) => ({ ...prev, [name]: true }));
-
-      if (rules) {
-        const error = rules(values[name]);
-
-        setErrors((prev) => ({ ...prev, [name]: error || undefined }));
-      }
+      validate([name]);
     },
   });
 
-  const handleSubmit = (
-    rules: ValidationRules<T>,
-    onSubmit: (data: T) => void
-  ) => {
-    const isValid = validate(rules);
+  const isValid = Object.values(errors).every((value) => !value);
 
-    if (isValid) {
+  const handleSubmit = (onSubmit: (data: T) => void) => {
+    setSubmitted(true);
+
+    if (validate()) {
       onSubmit(values);
-      setSubmitted(true);
     }
   };
-
-  const isValid = Object.values(errors).every((value) => !value);
 
   return {
     values,

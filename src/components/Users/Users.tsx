@@ -45,6 +45,8 @@ export default function Users() {
   const handleSubmit = async (formData: UserFormData) => {
     const data: NewUser = normalizeUserData(formData);
 
+    handleModalClose();
+
     if (user) {
       const updatedUser = await editUser(user.id, data);
 
@@ -56,8 +58,6 @@ export default function Users() {
 
       setUsers((prev) => [...prev, createdUser]);
     }
-
-    handleModalClose();
   };
 
   if (loading) return <p>Loading...</p>;
