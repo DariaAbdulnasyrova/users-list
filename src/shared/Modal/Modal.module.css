@@ -1,0 +1,49 @@
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: #01323399;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.content {
+  max-width: 512px;
+  width: 100%;
+  border-radius: 16px;
+  padding: 32px;
+  background: white;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.close {
+  top: 32px;
+  right: 32px;
+  stroke: #706d5c;
+  background: none;
+  margin: 0;
+  padding: 0;
+  border: none;
+  display: flex;
+  cursor: pointer;
+}
+
+.title {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  margin: 0 0 32px 0;
+  font-size: 24px;
+  line-height: 32px;
+}
+
+.body {
+  overflow: auto;
+}

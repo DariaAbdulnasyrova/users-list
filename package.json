@@ -1,0 +1,33 @@
+{
+  "name": "users-list",
+  "private": true,
+  "version": "0.0.0",
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "scripts": {
+    "start": "vite",
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "prettierConfig": {
+    "semi": false
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.47",
+    "@types/react": "^17.0.48",
+    "@types/react-dom": "^17.0.17",
+    "@vitejs/plugin-react": "^2.0.0",
+    "msw": "^2.11.5",
+    "prettier": "^3.2.5",
+    "typescript": "^4.7.4",
+    "vite": "^3.0.4",
+    "vite-plugin-svgr": "^4.5.0"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
+  }
+}

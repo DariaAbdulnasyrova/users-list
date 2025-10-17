@@ -1,0 +1,36 @@
+:root {
+  font-family: "DM Sans", sans-serif;
+  font-size: 16px;
+  background-color: #FAF9F2;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  color: #000000;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100vh;
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+main {
+  height: 100%;
+  width: 100%;
+  max-width: 1360px;
+  padding: 32px;
+  margin: 0 auto;
+}
