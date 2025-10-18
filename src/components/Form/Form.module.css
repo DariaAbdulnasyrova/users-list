@@ -17,7 +17,7 @@
     width: 100%;
     border-radius: 8px;
     padding: 6px 12px;
-    border: 2px solid #DFDDD3;
+    border: 2px solid #dfddd3;
     font-size: 16px;
     line-height: 32px;
   }
@@ -91,16 +91,16 @@
   color: red;
   font-size: 12px;
   line-height: 18px;
-  height: 0;
-  opacity: 0;
   overflow: hidden;
   -webkit-transition: opacity;
   transition: opacity;
   -webkit-transition-duration: 0.5s;
   transition-duration: 0.5s;
-}
-
-.error.visible {
   height: 100%;
   opacity: 1;
+
+  @starting-style {
+    height: 0;
+    opacity: 0;
+  }
 }

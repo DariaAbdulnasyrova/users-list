@@ -86,7 +86,7 @@ export default function Users() {
   return (
     <div>
       <div className={styles.header}>
-        <div>Users</div>
+        <div className={styles.title}>Users</div>
         <button
           className={styles.addButton}
           data-testid="add-user-btn"

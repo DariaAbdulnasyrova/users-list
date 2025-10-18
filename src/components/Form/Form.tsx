@@ -42,29 +42,23 @@ export default function Form({ formData, onSubmit, onCancel }: FormProps) {
             </option>
           ))}
         </select>
-        <div
-          className={`${styles.error} ${errors.country ? styles.visible : ""}`}
-        >
-          {errors.country}
-        </div>
+        {!!errors.country && (
+          <div className={styles.error}>{errors.country}</div>
+        )}
       </div>
       <div className={styles.input}>
         <label htmlFor="first-name-input">First name</label>
         <input id="first-name-input" type="text" {...register("firstName")} />
-        <div
-          className={`${styles.error} ${errors.firstName ? styles.visible : ""}`}
-        >
-          {errors.firstName}
-        </div>
+        {!!errors.firstName && (
+          <div className={styles.error}>{errors.firstName}</div>
+        )}
       </div>
       <div className={styles.input}>
         <label htmlFor="last-name-input">Last name</label>
         <input id="last-name-input" type="text" {...register("lastName")} />
-        <div
-          className={`${styles.error} ${errors.lastName ? styles.visible : ""}`}
-        >
-          {errors.lastName}
-        </div>
+        {!!errors.lastName && (
+          <div className={styles.error}>{errors.lastName}</div>
+        )}
       </div>
       <div className={styles.input}>
         <label htmlFor="age-input">Age</label>
@@ -75,9 +69,7 @@ export default function Form({ formData, onSubmit, onCancel }: FormProps) {
           max="100"
           {...register("age")}
         />
-        <div className={`${styles.error} ${errors.age ? styles.visible : ""}`}>
-          {errors.age}
-        </div>
+        {!!errors.age && <div className={styles.error}>{errors.age}</div>}
       </div>
       <div className={styles.buttons}>
         <button
