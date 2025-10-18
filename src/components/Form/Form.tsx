@@ -20,7 +20,8 @@ export default function Form({ formData, onSubmit, onCancel }: FormProps) {
 
   const { errors, register, handleSubmit, isValid } = useForm<UserFormData>(
     initialFormData,
-    validationRules
+    validationRules,
+    !!formData
   );
 
   const handleFormSubmit = (e: FormEvent) => {

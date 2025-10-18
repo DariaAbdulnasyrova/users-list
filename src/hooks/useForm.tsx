@@ -6,12 +6,13 @@ export type ValidationRules<T> = Partial<Record<keyof T, ValidationRule<T>[]>>;
 
 export function useForm<T extends Record<string, string>>(
   initialValues: T,
-  validationRules: ValidationRules<T>
+  validationRules: ValidationRules<T>,
+  hasBeenSubmitted: boolean
 ) {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState<Errors<T>>({});
   const [touched, setTouched] = useState<Partial<Record<keyof T, boolean>>>({});
-  const [submitted, setSubmitted] = useState<boolean>(false);
+  const [submitted, setSubmitted] = useState<boolean>(hasBeenSubmitted);
 
   const validate = (
     fields: (keyof T)[] = Object.keys(validationRules),
@@ -44,11 +45,10 @@ export function useForm<T extends Record<string, string>>(
 
       setValues((prev) => {
         const newValues = { ...prev, [name]: value };
-        const fieldsToValidate = [...dependent];
 
-        if (touched[name] || submitted) {
-          fieldsToValidate.push(name);
-        }
+        const fieldsToValidate = [...dependent, name].filter(
+          (field) => submitted || touched[field]
+        );
 
         validate(fieldsToValidate, newValues);
 
