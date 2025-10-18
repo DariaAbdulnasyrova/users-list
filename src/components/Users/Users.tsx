@@ -96,18 +96,20 @@ export default function Users() {
           Add user
         </button>
       </div>
-      <table className={styles.users}>
-        <thead>
-          <tr>
-            <th>Country</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Age</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>{usersElements}</tbody>
-      </table>
+      <div className={styles.wrapper}>
+        <table className={styles.users}>
+          <thead>
+            <tr>
+              <th>Country</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Age</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>{usersElements}</tbody>
+        </table>
+      </div>
       <Modal
         isOpen={isOpen}
         onClose={handleModalClose}
